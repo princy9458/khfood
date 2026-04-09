@@ -1,9 +1,16 @@
 import mongoose from "mongoose";
 
 const MONGO_URI = process.env.MONGO_URI || process.env.MONGODB_URI;
+const isPlaceholderMongoUri = (uri?: string) =>
+  !uri ||
+  uri.includes("<user>") ||
+  uri.includes("<password>") ||
+  uri.includes("@cluster.mongodb.net");
 
-if (!MONGO_URI) {
-  throw new Error("Please define the MONGO_URI environment variable inside .env");
+if (isPlaceholderMongoUri(MONGO_URI)) {
+  throw new Error(
+    "Please set MONGO_URI or MONGODB_URI to a real MongoDB connection string. The current value is still using the sample Atlas host.",
+  );
 }
 
 let cached = (global as any).mongoose;

@@ -3,6 +3,12 @@ import { MongoClient, Db } from "mongodb";
 let MONGODB_URI = process.env.MONGODB_URI;
 const TENANT_DB_NAME = process.env.TENANT_DB_NAME;
 
+const isPlaceholderMongoUri = (uri?: string) =>
+  !uri ||
+  uri.includes("<user>") ||
+  uri.includes("<password>") ||
+  uri.includes("@cluster.mongodb.net");
+
 if (
   MONGODB_URI?.startsWith("mongodb+srv://") &&
   MONGODB_URI.includes("@kalpcluster.mr8bacs.mongodb.net")
@@ -13,9 +19,9 @@ if (
   ).replace("mongodb+srv://", "mongodb://");
 }
 
-if (!MONGODB_URI) {
+if (isPlaceholderMongoUri(MONGODB_URI)) {
   throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env",
+    "Please set MONGODB_URI to a real MongoDB connection string. The current value is still using the sample Atlas host.",
   );
 }
 
