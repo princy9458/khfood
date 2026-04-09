@@ -235,7 +235,6 @@ function AttributesPageContent() {
               
               <div className="flex gap-4">
                 <input
-                  placeholder="Inscribe new value (e.g. 500g, Spicy, Twin Pack)"
                   placeholder="Enter value (e.g. 500g, Spicy, Twin Pack)"
                   value={newValue}
                   onChange={(e) => setNewValue(e.target.value)}
