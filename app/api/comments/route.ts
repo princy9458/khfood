@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import clientPromise from "@/lib/mongodb";
+import { getMongoClientPromise } from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
 const dbName = process.env.DB_NAME;
 //get all pages
 export async function GET(req: NextRequest) {
     try {
-        const client = await clientPromise;
+        const client = await getMongoClientPromise();
         const db = client.db(dbName);
         const pages = await db.collection("comments").find({}).toArray();
         return NextResponse.json({ success: true, pages });
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
 // post comments
 export async function POST(req: NextRequest) {
     try {
-        const client = await clientPromise;
+        const client = await getMongoClientPromise();
         const db = client.db(dbName);
         const comment = await req.json();
         const result = await db.collection("comments").insertOne(comment);
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 // update comments
 export async function PUT(req: NextRequest) {
     try {
-        const client = await clientPromise;
+        const client = await getMongoClientPromise();
         const db = client.db(dbName);
         const comment = await req.json();
         
@@ -65,7 +65,7 @@ export async function PUT(req: NextRequest) {
 // delete comments
 export async function DELETE(req: NextRequest) {
     try {
-        const client = await clientPromise;
+        const client = await getMongoClientPromise();
         const db = client.db(dbName);
         const { searchParams } = new URL(req.url);
         const id = searchParams.get("id");
