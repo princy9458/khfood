@@ -27,6 +27,9 @@ import GetAllForms from "@/lib/GetAllDetails/GetAllForms";
 const JWT_SECRET =
   process.env.JWT_SECRET || "default_jwt_secret_change_me_in_prod";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function DashboardLayout({
   children,
 }: {

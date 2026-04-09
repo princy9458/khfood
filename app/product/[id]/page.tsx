@@ -2,6 +2,9 @@ import Component from "@/components/pages/ProductDetailPage";
 import GetSingleProduct from "@/lib/GetAllDetails/GetSingleProduct";
 import { getSingleForm, getSingleProduct } from "@/lib/getPageData";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function Page({
   params,
 }: {
